@@ -68,3 +68,5 @@ def start_roll():
             target_position = i
             max_kakera = kakera
     send_text("tungdao GHA: stop roll")
+
+start_roll()
