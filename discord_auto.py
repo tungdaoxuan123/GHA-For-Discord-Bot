@@ -1,8 +1,8 @@
 import os
 import requests
 
-user_token = os.environ["discord_user_token"]
-channel_id = os.environ["discord_id"]
+user_token = os.environ["DISCORD_USER_TOKEN"]
+channel_id = os.environ["CHANNEL_ID"]
 
 url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
 
