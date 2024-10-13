@@ -61,7 +61,7 @@ def start_roll():
     target_position = 0
     for i in range(0, 8):
         send_text("$w")
-        kakera, emoji = fetch_last_message()
+        kakera, emoji = fetch_last_message(url, headers)
         send_text(f"Kakera is : {kakera}")
         send_text(f"emoji is : {emoji}")
         if kakera > max_kakera:
