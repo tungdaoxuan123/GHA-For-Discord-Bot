@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  discord_user_token = ${{ secrets.DISCORD_USER_TOKEN }}
-  channel_id = ${{ secrets.CHANNEL_ID }}
+  DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
+  CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
 
 jobs:
   run-python:
@@ -18,7 +18,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      - name: Run script
+
+      - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          python discord_auto.py
+
+      - name: Run script
+        run: python discord_auto.py
