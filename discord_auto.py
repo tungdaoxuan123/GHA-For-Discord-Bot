@@ -64,7 +64,7 @@ def start_roll():
     try:
         for i in range(8):
             send_text("$w")
-            time.sleep(1)
+            time.sleep(3)
             kakera, emoji = fetch_last_message(url, headers)
 
             if isinstance(kakera, int):
