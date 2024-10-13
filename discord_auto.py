@@ -41,4 +41,4 @@ def send_text(text):
 send_text("tungdao GHA: start roll")
 send_text("$w")
 kakera = fetch_last_message()
-send_text("Kakera is : {kakera}")
+send_text(f"Kakera is : {kakera}")
