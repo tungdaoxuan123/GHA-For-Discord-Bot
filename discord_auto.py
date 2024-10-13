@@ -2,6 +2,7 @@ import os
 import json
 import re
 import requests
+import time
 
 user_token = os.environ["DISCORD_USER_TOKEN"]
 channel_id = os.environ["CHANNEL_ID"]
@@ -23,7 +24,7 @@ def fetch_last_message(url, headers):
             description = data['embeds'][0]['description']
             match = re.search(r'\*\*(\d+)\*\*', description)
 
-            kakera = match.group(1) if match else "No number found."
+            kakera = int(match.group(1)) if match else "No number found."
             emoji = None
             if 'components' in data:
                 for component in data['components']:
@@ -59,14 +60,26 @@ def start_roll():
     send_text("tungdao GHA: start roll")
     max_kakera = 0
     target_position = 0
-    for i in range(0, 8):
-        send_text("$w")
-        kakera, emoji = fetch_last_message(url, headers)
-        send_text(f"Kakera is : {kakera}")
-        send_text(f"emoji is : {emoji}")
-        if kakera > max_kakera:
-            target_position = i
-            max_kakera = kakera
-    send_text("tungdao GHA: stop roll")
+
+    try:
+        for i in range(8):
+            send_text("$w")
+            time.sleep(1)
+            kakera, emoji = fetch_last_message(url, headers)
+
+            if isinstance(kakera, int):
+                send_text(f"Kakera is: {kakera}")
+                send_text(f"Emoji is: {emoji}")
+                
+                if kakera > max_kakera:
+                    target_position = i
+                    max_kakera = kakera
+            else:
+                send_text("Invalid kakera value. Stopping roll.")
+                break
+    except Exception as e:
+        send_text(f"An error occurred: {e}")
+    finally:
+        send_text("tungdao GHA: stop roll")
 
 start_roll()
