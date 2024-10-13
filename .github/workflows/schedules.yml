@@ -2,6 +2,7 @@ name: 'Auto Roll'
 
 on:
   workflow_dispatch:
+  push:
 
 env:
   DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
