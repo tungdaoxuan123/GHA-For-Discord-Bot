@@ -14,7 +14,7 @@ headers = {
     "Content-Type": "application/json"  # Set content type to JSON
 }
 
-def fetch_last_message():
+def fetch_last_message(url, headers):
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         messages = response.json()
@@ -23,14 +23,31 @@ def fetch_last_message():
             description = data['embeds'][0]['description']
             match = re.search(r'\*\*(\d+)\*\*', description)
 
-            if match:
-                kakera = match.group(1)
-                return kakera
-            else:
-                print("No number found.")
-                return 0
-    
-                
+            kakera = match.group(1) if match else "No number found."
+            emoji = None
+            if 'components' in data:
+                for component in data['components']:
+                    for subcomponent in component['components']:
+                        if 'emoji' in subcomponent and subcomponent['emoji']:
+                            emoji = subcomponent['emoji']['name']
+                            break
+            return kakera, emoji
+        else:
+            print("No messages found.")
+            return 0, None  # Return 0 and None if no data
+    else:
+        print(f"Failed to fetch messages. Status code: {response.status_code}, Response: {response.text}")
+        return 0, None  # Return 0 and None on failure
+
+
+def react_to_message(channel_id, message_id, emoji_id, user_token):
+    url = f'https://discord.com/api/v9/channels/{channel_id}/messages/{message_id}/reactions/{emoji_id}/@me'
+    headers = {
+        'Authorization': user_token,
+        'Content-Type': 'application/json'
+    }
+    response = requests.put(url, headers=headers)  # Use PUT to add a reaction
+              
 
 def send_text(text):
     payload = {
@@ -38,7 +55,16 @@ def send_text(text):
     }
     response = requests.post(url, json=payload, headers=headers)
 
-send_text("tungdao GHA: start roll")
-send_text("$w")
-kakera = fetch_last_message()
-send_text(f"Kakera is : {kakera}")
+def start_roll():
+    send_text("tungdao GHA: start roll")
+    max_kakera = 0
+    target_position = 0
+    for i in range(0, 8):
+        send_text("$w")
+        kakera, emoji = fetch_last_message()
+        send_text(f"Kakera is : {kakera}")
+        send_text(f"emoji is : {emoji}")
+        if kakera > max_kakera:
+            target_position = i
+            max_kakera = kakera
+    send_text("tungdao GHA: stop roll")
