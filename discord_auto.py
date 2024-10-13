@@ -13,7 +13,7 @@ headers = {
 }
 
 payload = {
-    "content": "text form GHA of repo: https://github.com/tungdaoxuan123/GHA_for_discord_bot"
+    "content": "text form tungdao GHA"
 }
 
 response = requests.post(url, json=payload, headers=headers)
