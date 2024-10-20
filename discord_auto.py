@@ -110,5 +110,6 @@ def start_roll():
         # Interact with the message with the highest kakera
         if target_message_id and target_custom_id:
             interact_with_message(channel_id, target_message_id, target_custom_id, user_token)
+            send_text(f"Guild id: {guild_id}")
 
 start_roll()
