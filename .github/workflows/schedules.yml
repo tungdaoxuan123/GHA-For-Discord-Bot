@@ -1,8 +1,10 @@
-name: 'Auto Roll'
+name: Auto Roll
 
 on:
-  workflow_dispatch:
-  push:
+  workflow_dispatch:  # Allows manual triggering of the workflow
+  push:               # Triggers on push to any branch
+  schedule:           # Schedule the job to run at specific intervals
+    - cron: '0 */3 * * *'  # This will run the job every 3 hours
 
 env:
   DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
