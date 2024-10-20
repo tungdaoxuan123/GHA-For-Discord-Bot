@@ -6,6 +6,7 @@ import time
 
 user_token = os.environ["DISCORD_USER_TOKEN"]
 channel_id = os.environ["CHANNEL_ID"]
+guild_id = os.environ["GUILD_ID"]  # Fetch the guild ID from environment variable
 
 url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
 
@@ -48,7 +49,7 @@ def interact_with_message(channel_id, message_id, custom_id, user_token):
     }
     payload = {
         "type": 2,  # Type for button interaction
-        "guild_id": "YOUR_GUILD_ID",  # Optional: ID of the guild
+        "guild_id": guild_id,  # Use the guild ID from environment variable
         "channel_id": channel_id,  # The channel ID
         "message_id": message_id,  # The message ID containing the button
         "data": {
