@@ -78,7 +78,7 @@ def start_roll():
     target_custom_id = None  # Store the custom ID of the button
 
     try:
-        for i in range(1):
+        for i in range(8):
             send_text("$w")
             time.sleep(3)
             kakera, emoji, message_id, components = fetch_last_message(url, headers)
