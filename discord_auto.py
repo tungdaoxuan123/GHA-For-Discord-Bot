@@ -48,7 +48,7 @@ def interact_with_message(channel_id, message_id, custom_id, user_token):
         'Content-Type': 'application/json'
     }
     payload = {
-        "type": 2,  # Type for button interaction
+        "type": 3,  # Type for button interaction
         "guild_id": guild_id,  # Use the guild ID from environment variable
         "channel_id": channel_id,  # The channel ID
         "message_id": message_id,  # The message ID containing the button
@@ -78,7 +78,7 @@ def start_roll():
     target_custom_id = None  # Store the custom ID of the button
 
     try:
-        for i in range(8):
+        for i in range(1):
             send_text("$w")
             time.sleep(3)
             kakera, emoji, message_id, components = fetch_last_message(url, headers)
